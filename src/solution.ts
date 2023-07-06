@@ -231,7 +231,7 @@ class Calculator {
   private readonly segments: Segment[] = [];
   private readonly solutions = new Map<number, string[]>();
 
-  constructor(digits: [number, number, number, number]) {
+  constructor(digits: number[]) {
     if (!Array.isArray(digits) || digits.length !== 4) {
       console.log('🚀 ~ Calculator ~ constructor ~ digits:', digits);
       throw 'Invalid digits argument.';
@@ -332,6 +332,14 @@ class Calculator {
       this.addSegments(...newOperations);
       console.log(++i);
     } while (newOperations.length > 0);
+  }
+
+  getSolutions() {
+    const solutionsObj: {[key: number]: string[]} = {};
+    Array.from(this.solutions.entries())
+      .sort(([a], [b]) => (a > b ? 1 : a < b ? -1 : 0))
+      .forEach(([value, solutions]) => (solutionsObj[value] = solutions));
+    return solutionsObj;
   }
 
   printSegments() {
